@@ -16,31 +16,41 @@
      never see it). Hides on window 'load', with a timeout fallback so a slow
      asset can never block the page indefinitely. ------------------------- */
   function initPreloader() {
-    var el = $('#preloader');
-    if (!el) return;
-    var hidden = false;
-    function hide() {
-      if (hidden) return;
-      hidden = true;
+  var el = $('#preloader');
+  if (!el) return;
+
+  var hidden = false;
+  var startTime = Date.now();
+  var minDisplayTime = 1000; // 1 seconds
+
+  function hide() {
+    if (hidden) return;
+    hidden = true;
+
+    var elapsed = Date.now() - startTime;
+    var remaining = Math.max(0, minDisplayTime - elapsed);
+
+    window.setTimeout(function () {
       el.classList.add('is-hidden');
       el.setAttribute('aria-hidden', 'true');
+
       window.setTimeout(function () {
-        if (el && el.parentNode) el.parentNode.removeChild(el);
+        if (el && el.parentNode) {
+          el.parentNode.removeChild(el);
+        }
       }, 600);
-    }
-    if (document.readyState === 'complete') hide();
-    else window.addEventListener('load', hide);
-    window.setTimeout(hide, 3500); /* safety net */
+    }, remaining);
   }
 
-  /* ---- Header: shadow once the page is scrolled ------------------------- */
-  function initHeader() {
-    var header = $('.site-header');
-    if (!header) return;
-    var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 8); };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+  if (document.readyState === 'complete') {
+    hide();
+  } else {
+    window.addEventListener('load', hide);
   }
+
+  /* Safety net — never allow the preloader to block the page indefinitely */
+  window.setTimeout(hide, 3500);
+}
 
   /* ---- Mobile drawer ----------------------------------------------------- */
   function initDrawer() {
