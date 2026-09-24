@@ -779,14 +779,25 @@ figcaption { margin-top: 14px; padding-left: 14px; border-left: 3px solid var(--
   .nav a { font-size: 0.8125rem; }
   .header-cta { padding-inline: 18px; }
 }
-@media (max-width: 1365px) {
+/* @media (max-width: 1365px) {
   :root { --header-h: 72px; }
   .nav { display: none; }
   .menu-btn { display: inline-flex; }
   .brand img { height: 42px; }
   .header-actions { display: flex; align-items: center; gap: 12px; }
 }
-@media (min-width: 1366px) { .header-actions .menu-btn { display: none; } }
+@media (min-width: 1366px) { .header-actions .menu-btn { display: none; } } */
+
+@media (max-width: 1023px) {
+  :root { --header-h: 72px; }
+  .nav { display: none; }
+  .menu-btn { display: inline-flex; }
+  .brand img { height: 42px; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+
+}
+@media (min-width: 1024px) { .nav { display: flex; } .header-actions .menu-btn { display: none; } }
+
 @media (max-width: 1024px) {
   .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
