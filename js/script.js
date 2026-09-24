@@ -86,7 +86,10 @@
       }
     });
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 1180 && document.body.classList.contains('nav-open')) close();
+      // if (window.innerWidth > 1180 && document.body.classList.contains('nav-open')) close();
+       if (window.innerWidth >= 1024 && document.body.classList.contains('nav-open')) {
+          close();
+        }
     });
   }
 
